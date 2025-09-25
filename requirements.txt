@@ -1,0 +1,20 @@
+# Data handling
+pandas
+numpy
+
+# Web scraping
+requests
+beautifulsoup4
+
+# NLP embeddings & models
+transformers
+sentence-transformers
+
+# Vector database
+chromadb
+
+# Utils
+tqdm
+
+# Interfaces
+flask
