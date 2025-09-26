@@ -4,6 +4,7 @@ import markdown
 import os
 
 app = Flask(__name__)
+app.static_folder = 'static'
 app.secret_key = os.urandom(24) 
 
 print("Loading RAG pipeline...")
@@ -56,4 +57,4 @@ def chat():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
