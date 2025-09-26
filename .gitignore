@@ -1,14 +1,13 @@
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.pkl
-*.pickle
-*.log
 
-# Virtual environment
 venv/
 
-
+data/chroma_db/
 
 .vscode/
+
+.ipynb_checkpoints/
+
+*.ipynb
+
+src/temp.py
