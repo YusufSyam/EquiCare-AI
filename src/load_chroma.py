@@ -1,26 +1,46 @@
 import json
-from chromadb import Client
-from chromadb.config import Settings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_core.documents import Document
 
-def load_json_to_chroma(json_path="data/horse_diseases_docs.json", persist_dir="data/chroma_db"):
-    client = Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory=persist_dir))
+CHROMA_PATH = "../data/chroma_db"
+JSON_PATH = "../data/horse_diseases_docs.json"
 
-    if "horse_diseases" in [c.name for c in client.list_collections()]:
-        client.delete_collection("horse_diseases")
-
-    collection = client.create_collection("horse_diseases")
-
+def load_chroma(json_path=JSON_PATH, persist_directory=CHROMA_PATH):
+    # 🔹 Load JSON
     with open(json_path, "r", encoding="utf-8") as f:
-        docs = json.load(f)
+        data = json.load(f)
 
-    collection.add(
-        documents=[d["document"] for d in docs],
-        metadatas=[d["metadata"] for d in docs],
-        ids=[d["id"] for d in docs]
+    # 🔹 Convert setiap entry JSON ke Document
+    docs = [
+        Document(
+            page_content=doc["document"],   # langsung isi dengan teks utamanya
+            metadata={
+                "id": doc["id"],
+                "name": doc["metadata"]["name"],
+                "category": doc["metadata"]["category"],
+                "url": doc["metadata"]["url"]
+            }
+        )
+        for doc in data
+    ]
+
+    # 🔹 Embedding
+    embedding_model = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-    print(f"oaded {len(docs)} documents into ChromaDB at {persist_dir}")
-    return collection
+    # 🔹 Buat vektor DB
+    vectordb = Chroma.from_documents(
+        documents=docs,
+        embedding=embedding_model,
+        persist_directory=persist_directory
+    )
+    
+    print(f"Chroma DB created at {persist_directory} with {len(docs)} documents")
+
+    return vectordb
+
 
 if __name__ == "__main__":
-    load_json_to_chroma()
+    load_chroma()
