@@ -44,6 +44,25 @@ def chat():
     try:
         result = rag_chain.invoke({"input": user_query})
         bot_response = cleanse_response(result["answer"])
+
+            # Extract sources from retrieved context (new!)
+        sources = []
+        if "context" in result:
+            for doc in result["context"]:
+                if hasattr(doc, 'metadata') and doc.metadata:
+                    sources.append({
+                        'name': doc.metadata.get('name', 'Unknown'),
+                        'source': doc.metadata.get('url', 'N/A')
+                    })
+        
+            # Format citations (append to response)
+        if sources:
+            citations_html = "<br/><strong>Sources:</strong><ul>"
+            for src in sources:
+                citations_html += f"<li>{src['name']} (Source Link: [{src['source']}]({src['source']}))</li>"
+            citations_html += "</ul>"
+            bot_response += citations_html  # Append as HTML list
+        
         
         bot_response_html = markdown_to_html(bot_response)
     except Exception as e:
