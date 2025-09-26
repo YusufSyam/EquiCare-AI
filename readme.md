@@ -159,6 +159,7 @@ The script generates two files:
   Feel free to modify it for better performance.
 
 * **Limitations**  
+  - Input and output are expected to be in English
   - The chatbot does not remember past interactions to generate contextual responses. Each interaction is **stateless** and independent.  
   - All chat history (`session['chat_history']`) is stored in the client-side browser cookie. This means that every time the application restarts, previous chat history is cleared to save cookie storage space.
 
@@ -168,7 +169,7 @@ The script generates two files:
   - **GPU:** NVIDIA GeForce RTX 4050 Laptop GPU (6 GB VRAM)  
   - **RAM:** 12 GB  
 
-  With these specs, each inference typically takes around **5–10 seconds**. If you find the current models too heavy or too weak, experiment with different HuggingFace models. Everything is modular and configurable, so adapting this system for your own needs should be straightforward.
+  With these specs, each inference typically takes around **5–60 seconds**. If you find the current models too heavy or too weak, experiment with different HuggingFace models. Everything is modular and configurable, so adapting this system for your own needs should be straightforward.
 
 <!-- 
 * **Benchmarking**
