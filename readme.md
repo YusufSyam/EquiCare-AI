@@ -1,4 +1,9 @@
-# EquiCare-AI 🐴🤖
+<div align="center">
+<img src="static/image/logo.png" alt="App Logo" width="200">
+</div>
+
+
+# EquiCare-AI 
 
 EquiCare-AI is a **chatbot powered by Retrieval-Augmented Generation (RAG)** designed to assist with horse disease knowledge and management.  
 The dataset comes from [HorseDVM](https://horsedvm.com/views/health.php), a website that contains hundreds of horse diseases with detailed explanations.  
