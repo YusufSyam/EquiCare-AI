@@ -18,6 +18,12 @@ URL= "https://horsedvm.com/views/health.php"
 DISEASE_URL_PATTERN= r'disease/([^/]+)'
 DISEASE_BASE_URL= "https://horsedvm.com/disease/"
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
+OUTPUT_JSON = os.path.join(DATA_DIR, "horse_diseases_docs.json")
+OUTPUT_CSV = os.path.join(DATA_DIR, "horse_diseases.csv")
+
 response = requests.get(URL)
 
 soup = BeautifulSoup(response.text, 'html.parser')
@@ -97,7 +103,10 @@ for idx, disease_url in enumerate(link_list):
 
         disease_information_list.append(disease_information_dict)
 
-        print(f'Indeks-{idx} Success')
+        # print(f'Indeks-{idx} Success')
+
+        # if idx>=5:
+        #     break
 
     except requests.exceptions.HTTPError as e:
         print(f"Indeks-{idx} HTTP Error: {e}, URL: {disease_url}")
@@ -136,9 +145,9 @@ import json
 
 docs = df_disease.apply(row_to_doc, axis=1).tolist()
 
-with open("horse_diseases_docs.json", "w", encoding="utf-8") as f:
+with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
     json.dump(docs, f, ensure_ascii=False, indent=2)
 
 print(f"Saved {len(docs)} documents to horse_diseases_docs.json")
 
-df_disease.to_csv('horse_diseases.csv', index=None)
+df_disease.to_csv(OUTPUT_CSV, index=None)

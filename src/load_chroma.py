@@ -2,11 +2,20 @@ import json
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
+import os
+import shutil
 
-CHROMA_PATH = "../data/chroma_db"
-JSON_PATH = "../data/horse_diseases_docs.json"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
+CHROMA_PATH = os.path.join(DATA_DIR, "chroma_db")
+JSON_PATH = os.path.join(DATA_DIR, "horse_diseases_docs.json")
 
 def load_chroma(json_path=JSON_PATH, persist_directory=CHROMA_PATH):
+    if os.path.exists(persist_directory):
+        shutil.rmtree(persist_directory)
+        print(f"Existing Chroma DB at {persist_directory} removed.")
+
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 

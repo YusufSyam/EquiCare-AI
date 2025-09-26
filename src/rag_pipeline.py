@@ -6,7 +6,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from pathlib import Path
 
-from utils.constants import BASE_PROMPT_TEMPLATE
+from src.utils.constants import BASE_PROMPT_TEMPLATE
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -22,42 +22,42 @@ def build_rag_pipeline(prompt_template= BASE_PROMPT_TEMPLATE, persist_directory=
         embedding_function=embedding_model
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(
-        "distilgpt2",
-        model_max_length=512,
-        padding_side="left",
-        truncation=True
-    )   
-
-    llm_pipeline = pipeline(
-        "text-generation",
-        model="distilgpt2",   # bisa ganti model lain
-        tokenizer=tokenizer,
-        device_map="auto" ,
-        max_length=512, 
-        max_new_tokens=200,
-    )
-
-   #  model_name = "tiiuae/Falcon3-1B-Instruct"
-
-   #  tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-   #  model = AutoModelForCausalLM.from_pretrained(
-   #      model_name,
-   #      device_map="auto",
-   #      torch_dtype="auto",
-   #      load_in_8bit=True,
-   #  )
+   #  tokenizer = AutoTokenizer.from_pretrained(
+   #      "distilgpt2",
+   #      model_max_length=512,
+   #      padding_side="left",
+   #      truncation=True
+   #  )   
 
    #  llm_pipeline = pipeline(
    #      "text-generation",
-   #      model=model,
+   #      model="distilgpt2",  
    #      tokenizer=tokenizer,
-   #      device_map="auto",
-   #      max_new_tokens=1024,
-   #      temperature=0.3,
-   #      do_sample=True
+   #      device_map="auto" ,
+   #      max_length=512, 
+   #      max_new_tokens=200,
    #  )
+
+    model_name = "tiiuae/Falcon3-1B-Instruct"
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        device_map="auto",
+        torch_dtype="auto",
+        load_in_8bit=True,
+    )
+
+    llm_pipeline = pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer,
+        device_map="auto",
+        max_new_tokens=1024,
+        temperature=0.3,
+        do_sample=True
+    )
 
     llm = HuggingFacePipeline(pipeline=llm_pipeline)
 
