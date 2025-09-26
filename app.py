@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from src.rag_pipeline import build_rag_pipeline  
-import markdown
 import os
+
+from src.utils.constants import STARTER_MESSAGE_MD
+from src.utils.functions import cleanse_response, markdown_to_html
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -11,28 +13,6 @@ print("Loading RAG pipeline...")
 rag_chain = build_rag_pipeline()
 print("RAG pipeline loaded successfully!")
 
-def cleanse_response(old_response):
-    answerForeword = "Answer:"
-    answer_start = old_response.find(answerForeword) + len(answerForeword)
-    new_response = old_response[answer_start:].replace("<|assistant|>", "").strip()
-    return new_response
-
-STARTER_MESSAGE_MD = """Hi! 🐴👋 I’m **EquiCare AI**, your trusted assistant for horse health and diseases.
-I can help you understand symptoms, possible conditions, and preventive care for your horse.
-
-Here are some areas you might be interested in:
-1. Common Horse Diseases 🩺
-2. Symptom Checker 🤒
-3. Prevention & Care Tips 🌿
-4. Emergency Guidelines 🚨
-
-Feel free to ask me anything about your horse’s health!"""
-
-def markdown_to_html(md_text):
-    return markdown.markdown(
-        md_text,
-        extensions=['extra', 'nl2br'] 
-    )
 
 @app.route('/')
 def index():
