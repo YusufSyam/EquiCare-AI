@@ -5,6 +5,10 @@ from langchain_core.documents import Document
 import os
 import shutil
 
+from src.utils.model_config import MODEL_CONFIG
+
+embedding_model_name = MODEL_CONFIG["embedding_model_name"]
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
@@ -33,7 +37,7 @@ def load_chroma(json_path=JSON_PATH, persist_directory=CHROMA_PATH):
     ]
 
     embedding_model = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
+        model_name=embedding_model_name
     )
 
     vectordb = Chroma.from_documents(

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from src.rag_pipeline import build_rag_pipeline  
 import os
 
-from src.utils.constants import STARTER_MESSAGE_MD
+from src.utils.string_constants import STARTER_MESSAGE_MD
 from src.utils.functions import cleanse_response, markdown_to_html
 
 app = Flask(__name__)
