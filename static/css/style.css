@@ -50,7 +50,7 @@ body {
 }
 
 .header-container {
-    margin: 12px auto 24px;
+    margin: 12px auto 36px;
     justify-content: center;
     gap: 16px;
 
@@ -77,14 +77,14 @@ body {
 .header h1 {
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 5px;
     color: white;
 }
 
 .header p {
-    font-size: 1rem;
-    opacity: 0.9;
-    color: rgba(255, 255, 255, 0.8); /* Secondary text variant */
+    font-size: 1.1rem;
+    color: white;
+    text-align: start;
+    margin-left: 24px;
 }
 
 /* Chat Container */
@@ -98,7 +98,7 @@ body {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 24px;
 }
 .chat-container::-webkit-scrollbar {
     width: 6px;
@@ -131,21 +131,22 @@ body {
     align-self: flex-start;
 }
 .message-content {
-    padding: 15px 20px;
+    padding: 16px 28px;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     word-wrap: break-word;
     max-width: 100%;
 }
 .message.user .message-content {
-    background: linear-gradient(135deg, #EF9752 0%, #ff8c42 100%); /* Orange gradient */
-    color: white;
+    background: linear-gradient(135deg, #e6e5eb 0%, #e6e5eb 100%); /* Orange gradient */
+    color: #000000;
+    box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.1);
     border-bottom-right-radius: 5px;
 }
 .message.bot .message-content {
-    background: linear-gradient(135deg, #C82964 0%, #a81c5e 100%); /* Magenta gradient */
-    color: white;
+    background: white; /* Magenta gradient */
+    color: #334155;
     border-bottom-left-radius: 5px;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.1);    
 }
 .message-label {
     font-size: 0.85rem;
