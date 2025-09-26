@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from src.rag_pipeline import build_rag_pipeline  
+import markdown
 import os
 
 app = Flask(__name__)
@@ -37,11 +38,16 @@ def chat():
     try:
         result = rag_chain.invoke({"input": user_query})
         bot_response = cleanse_response(result["answer"])
-        print('bot_response: ',bot_response)
+        # print(bot_response)
+        
+        bot_response_html = markdown.markdown(
+            bot_response,
+            extensions=['extra', 'nl2br'] 
+        )
     except Exception as e:
-        bot_response = f"Error: {str(e)}. Please try again."
+        bot_response_html  = f"Error: {str(e)}. Please try again."
     
-    session['chat_history'].append({'role': 'bot', 'content': bot_response})
+    session['chat_history'].append({'role': 'bot', 'content': bot_response_html })
     
     if len(session['chat_history']) > 20:
         session['chat_history'] = session['chat_history'][-20:]

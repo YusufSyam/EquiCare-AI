@@ -71,6 +71,17 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
+        /* Tambahan CSS untuk Markdown rendering (opsional, untuk styling bold/italic) */
+        .message strong, .message b {
+            font-weight: bold;
+        }
+        .message em, .message i {
+            font-style: italic;
+        }
+        .message ul, .message ol {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +99,8 @@
     <div class="chat-container" id="chatContainer">
         {% for msg in chat_history %}
             <div class="message {{ msg.role }}">
-                <strong>{{ 'You' if msg.role == 'user' else 'Bot' }}:</strong> {{ msg.content }}
+                <strong>{{ 'You' if msg.role == 'user' else 'Bot' }}:</strong> 
+                {{ msg.content | safe }}  <!-- 🔹 | safe untuk render HTML dari Markdown -->
             </div>
         {% endfor %}
     </div>
