@@ -10,7 +10,6 @@
       type="image/x-icon"
       href="{{ url_for('static', filename='favicon.ico') }}"
     />
-    <!-- Link ke CSS eksternal -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -18,8 +17,7 @@
   </head>
   <body>
     <div class="container">
-      <!-- Header dengan Logo -->
-      <div class="group header-container">
+      <div class="header-container">
         <img
           src="{{ url_for('static', filename='image/logo.png') }}"
           alt="Horse Disease Detector Logo"
@@ -28,37 +26,29 @@
         />
         <div class="stack" style="gap: 0px">
           <h1 class="header-text">EquiCare AI</h1>
-          <p class="secondary-text">
-            Horse Disease Detector Chatbot
-          </p>
+          <p class="secondary-text">Horse Disease Detector Chatbot</p>
         </div>
       </div>
       <div class="header">
         <p>Chat Box</p>
       </div>
 
-      <!-- Flash Messages -->
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
       message in messages %}
       <div class="flash-message">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
 
-      <!-- Chat Container -->
       <div class="chat-container" id="chatContainer">
         {% for msg in chat_history %}
         <div class="message {{ msg.role }}">
           <div class="message-label">
             {{ 'You' if msg.role == 'user' else 'Bot' }}
           </div>
-          <div class="message-content">
-            {{ msg.content | safe }}
-            <!-- Markdown rendering dengan | safe -->
-          </div>
+          <div class="message-content">{{ msg.content | safe }}</div>
         </div>
         {% endfor %}
       </div>
 
-      <!-- Input Form -->
       <form method="POST" action="/chat">
         <div class="input-container">
           <input
@@ -75,11 +65,9 @@
     </div>
 
     <script>
-      // Auto-scroll ke bawah chat container saat load atau new message
       const chatContainer = document.getElementById("chatContainer");
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
-      // Scroll otomatis setelah submit (via POST redirect)
       window.addEventListener("load", function () {
         chatContainer.scrollTop = chatContainer.scrollHeight;
       });
