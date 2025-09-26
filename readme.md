@@ -49,6 +49,7 @@ The script generates two files:
    > Using a different version may cause different results.
 
 3. **Scrape data from HorseDVM**
+
    Go to the `src` directory and run:
 
    ```bash
@@ -152,8 +153,8 @@ The script generates two files:
   Feel free to modify it for better performance.
 
 * **Limitations**  
-  1. The chatbot does not remember past interactions to generate contextual responses. Each interaction is **stateless** and independent.  
-  2. Since this is a simple application, all chat history (`session['chat_history']`) is stored in the client-side browser cookie. This means that every time the application restarts, previous chat history is cleared to save cookie storage space.
+  - The chatbot does not remember past interactions to generate contextual responses. Each interaction is **stateless** and independent.  
+  - All chat history (`session['chat_history']`) is stored in the client-side browser cookie. This means that every time the application restarts, previous chat history is cleared to save cookie storage space.
 
 * **Local Machine Specs**  
   The following hardware was used to run the models locally:  
